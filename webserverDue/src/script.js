@@ -4,7 +4,7 @@ $(()=>{
                 console.log(prof);
                 $("#combobox").append("<option value='"+prof+"'> "+prof+ "</option>")
             }));
-            
+             
         });     
         
 	$("#submit").click(function(){
