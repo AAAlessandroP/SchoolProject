@@ -41,16 +41,30 @@ class Orario
         }
         return s.substring(0, s.length()); // "prof1|p2|p3"
     }
-    
-    public String infoDocente(String docente, String ora, String giorno)
+    public String infoDocente(String docente, boolean settimanale)
     {
-        System.out.println("docente "+docente.toLowerCase());
-        System.out.println(ora + "," + giorno);
+        System.out.println("infoDocente interrogata con :"+docente+"*");
 
         Set<String> keys = ht.keySet();
         for(String key: keys)
         {
-            if(key.toLowerCase().contains(docente.toLowerCase()))
+            if(key.toLowerCase().contains(docente.toLowerCase()))//quel prof
+            {
+                return ht.get(key).toString(); 
+            }
+        }
+        return "docente non in orario";
+    
+    }
+    
+    public String infoDocente(String docente, String ora, String giorno)
+    {
+        System.out.println("infoDocente interrogata con :"+docente+"*"+ora+"*"+giorno+"*");
+
+        Set<String> keys = ht.keySet();
+        for(String key: keys)
+        {
+            if(key.toLowerCase().contains(docente.toLowerCase()))//quel prof
             {
                 String fascia[] =  ht.get(key).toString().split(";");
                 for(int i = 0; i < fascia.length; i++)
@@ -87,7 +101,8 @@ class Orario
                }
             }
         }
-                
+
         return "docente non in orario";
     }
+        
 }

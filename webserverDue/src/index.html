@@ -18,10 +18,23 @@
 <body>
 </body>
 
-	seleziona il prof di cui vuoi i dettagli:
-	<select id="combobox">
-	  
-	</select> 
-        <input id="submit" type="submit" value="vai">
-        <!--todo : ora/giorno OPZIONALI, prederinito:now()(lato server)-->
+    seleziona il prof di cui vuoi i dettagli:
+    <select id="combobox">
+
+    </select> 
+    <input id="submit2" type="submit" value="ottieni orario settimana"><br>
+
+        
+    giorno:<select id="giorno">
+        <option value="-1">(ora)</option>
+        <option value="0">lunedì</option>
+        <option value="1">matedì</option>
+        <option value="2">mercoledì</option>
+        <option value="3">giovedi</option>
+        <option value="4">venerdì</option>
+        <option value="5">sabato</option>            
+    </select><br>
+    quale ora? 0=adesso<input value="0" type="number" id="ora">
+    <input id="submit" type="submit" value="vai"><br>
+        
 </html>

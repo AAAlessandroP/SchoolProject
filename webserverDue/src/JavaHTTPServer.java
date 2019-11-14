@@ -130,7 +130,7 @@ public class JavaHTTPServer implements Runnable
                 
                 System.out.println("RISPONDO alla richiesta x 1 doc "+s);
                 // search=NOME[&giorno=G][&ora=O]
-                s= s.replace("/search?nome=%20","nome=");
+                s= s.replace("/search?nome=","nome=");
                 s= s.replaceAll("%20"," ");             
 
                 String requestPart[] = s.split("&");
@@ -138,7 +138,7 @@ public class JavaHTTPServer implements Runnable
                     for(int i = 0; i < requestPart.length; i++)
                     {
                         StringTokenizer st = new StringTokenizer(requestPart[i], "=");
-                        String ss = st.nextToken();                        
+                        String ss = st.nextToken();       
                         pr.setProperty(ss, st.nextToken());//Calls the Hashtable method put.
                         //aggiunge a pr le le coppie key-value che ci sono nella richiesta
                     }   
@@ -148,13 +148,18 @@ public class JavaHTTPServer implements Runnable
                     if(giorno<0) giorno =6;// se dom=6
                     int ora = gc.get(Calendar.HOUR_OF_DAY) - 8; // ora attuale: 0 per le 8, 1 per le 9 ... 
 
-                    if(pr.getProperty("giorno", "") == "")// se non c'era è oggi
-                        pr.setProperty("giorno", String.valueOf(giorno));
-
-                    if(pr.getProperty("ora", "") == "")
-                        pr.setProperty("ora", String.valueOf(ora));
-                    
-                    response = o.infoDocente(pr.getProperty("nome"), pr.getProperty("ora"), pr.getProperty("giorno"));                    
+                    if(pr.getProperty("settimanale","").equals("true")){
+                        System.out.println("richiestoci il settimanale");
+                        response = o.infoDocente(pr.getProperty("nome"),true);
+                    }else{
+                        System.out.println("richiestoci un ora precisa");
+                        
+                        if(pr.getProperty("giorno", "") == "")// se non c'era è oggi
+                            pr.setProperty("giorno", String.valueOf(giorno));
+                        if(pr.getProperty("ora", "") == "")
+                            pr.setProperty("ora", String.valueOf(ora));                    
+                        response = o.infoDocente(pr.getProperty("nome"), pr.getProperty("ora"), pr.getProperty("giorno"));     
+                    }
             }
             
             if(s.equals("/all")){// RISPONDO alla richiesta x tutti
