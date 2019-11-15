@@ -4,7 +4,7 @@ import java.util.*;
 
 public class JavaHTTPServer implements Runnable
 { 
-	static final int PORT = 8080;
+	static final int PORT = 3000;
 	
 	private Socket connect;
         private Orario o = new Orario();

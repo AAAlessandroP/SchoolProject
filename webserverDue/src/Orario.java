@@ -16,13 +16,13 @@ class Orario
         {
             dati = scanner.nextLine();
             scanner.close();    
-        } 
+        }
         catch (Exception ex) 
         {ex.printStackTrace();}
         
         //System.out.println("dati"+dati);
         
-        String righe[] = dati.split("§");
+        String righe[] = dati.split("§");//!!
                 
         for(int i = 0; i < righe.length; i++)
         {
