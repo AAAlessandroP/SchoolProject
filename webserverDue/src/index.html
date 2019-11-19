@@ -2,11 +2,17 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-
   <title>Frontend</title>
   <meta name="description" content="The HTML5 ">
   <meta name="author" content="">
+  <meta charset="utf-8">
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+   
 
 <script
 			  src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -14,17 +20,20 @@
 			  crossorigin="anonymous"></script>
 			  <script src="script.js"></script>
 </head>
-
-<body>
+<body style="background-color: grey">
 </body>
 
     seleziona il prof di cui vuoi i dettagli:
     <select id="combobox">
 
     </select> 
-    <input id="submit2" type="submit" value="ottieni orario settimana"><br>
+    <input id="submit2" type="submit" value="ottieni orario settimana"><br><br>
+    ha magari ore buche in comune con
+    <select id="combobox2">
 
-        
+    </select> 
+    <input id="submitOraBuca" type="submit" value=" ? "><br><br>
+
     giorno:<select id="giorno">
         <option value="-1">(ora)</option>
         <option value="0">lunedì</option>
@@ -34,7 +43,11 @@
         <option value="4">venerdì</option>
         <option value="5">sabato</option>            
     </select><br>
-    quale ora? 0=adesso<input value="0" type="number" id="ora">
-    <input id="submit" type="submit" value="vai"><br>
-        
+    quale ora? 0=adesso <input value="0" type="number" id="ora"><br><br>
+    cerca orario doc con hh e gg<input id="submit" type="submit" value="cerca"><br>
+    cerca disponibilità aula con hh e gg<input id="submitAula" type="submit" value="cerca aula"><br>
+    aula: <input type="text" id="aula" name="aula"><br>
+    
+    <br><br>
+     <div id="mapid" style="height: 300px;"></div>
 </html>

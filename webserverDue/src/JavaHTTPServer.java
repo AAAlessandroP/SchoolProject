@@ -2,12 +2,11 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class JavaHTTPServer implements Runnable
+public class JavaHTTPServer implements Runnable //istanziata quando c'è una nuova conn
 { 
 	static final int PORT = 3000;
 	
-	private Socket connect;
-        private Orario o = new Orario();
+	private Socket connect;        
 	
 	public JavaHTTPServer(Socket c) 
         {
@@ -128,6 +127,8 @@ public class JavaHTTPServer implements Runnable
             
             if(s.contains("/search")){// RISPONDO alla richiesta x 1 doc
                 
+                Orario o = new Orario();
+                
                 System.out.println("RISPONDO alla richiesta x 1 doc "+s);
                 // search=NOME[&giorno=G][&ora=O]
                 s= s.replace("/search?nome=","nome=");
@@ -144,7 +145,7 @@ public class JavaHTTPServer implements Runnable
                     }   
 
                     GregorianCalendar gc = new GregorianCalendar();
-                    int giorno = gc.get(Calendar.DAY_OF_WEEK) -1; // giorno della settimana: 0 lun, 1 mar...
+                    int giorno = gc.get(Calendar.DAY_OF_WEEK) -2; // giorno della settimana: 0 lun, 1 mar...
                     if(giorno<0) giorno =6;// se dom=6
                     int ora = gc.get(Calendar.HOUR_OF_DAY) - 8; // ora attuale: 0 per le 8, 1 per le 9 ... 
 
@@ -162,8 +163,55 @@ public class JavaHTTPServer implements Runnable
                     }
             }
             
+            if(s.contains("/aula")){
+                
+                Orario o = new Orario();
+                s= s.replaceAll("%20"," ");
+                s= s.replace("/aula?aula=","aula=");
+                String requestPart[] = s.split("&");
+                Properties pr = new Properties();
+                for(int i = 0; i < requestPart.length; i++)
+                {
+                    StringTokenizer st = new StringTokenizer(requestPart[i], "=");
+                    String ss = st.nextToken();       
+                    pr.setProperty(ss, st.nextToken());//Calls the Hashtable method put.
+                    //aggiunge a pr le le coppie key-value che ci sono nella richiesta
+                }   
+                GregorianCalendar gc = new GregorianCalendar();
+                int giorno = gc.get(Calendar.DAY_OF_WEEK) -2; // giorno della settimana: 0 lun, 1 mar...
+                if(giorno<0) giorno =6;// se dom=6
+                int ora = gc.get(Calendar.HOUR_OF_DAY) - 8; // ora attuale: 0 per le 8, 1 per le 9 ... 
+                if(pr.getProperty("giorno", "") == "")// se non c'era è oggi
+                    pr.setProperty("giorno", String.valueOf(giorno));
+                if(pr.getProperty("ora", "") == "")
+                    pr.setProperty("ora", String.valueOf(ora));
+                
+                response = o.aulaOccupata(pr.getProperty("aula"), pr.getProperty("ora"), pr.getProperty("giorno"));
+            }
+            
+            if(s.contains("/orabuca")){
+                
+                Orario o = new Orario();
+                s= s.replaceAll("%20"," ");
+                s= s.replace("/orabuca?doc1=","doc1=");
+                String requestPart[] = s.split("&");
+                Properties pr = new Properties();
+                for(int i = 0; i < requestPart.length; i++)
+                {
+                    StringTokenizer st = new StringTokenizer(requestPart[i], "=");
+                    String ss = st.nextToken();       
+                    pr.setProperty(ss, st.nextToken());//Calls the Hashtable method put.
+                    //aggiunge a pr le le coppie key-value che ci sono nella richiesta
+                }   
+                System.out.println("pr.getProperty(\"doc1\")"+pr.getProperty("doc1"));
+                System.out.println("pr.getProperty(\"doc2\")"+pr.getProperty("doc2"));
+                
+                response = o.oreBucheComuni(pr.getProperty("doc1"), pr.getProperty("doc2"));
+            }else 
+            
             if(s.equals("/all")){// RISPONDO alla richiesta x tutti
-                System.out.println("RISPONDO alla richiesta x tutti");
+                
+                Orario o = new Orario();
                 response = o.tuttiDocenti();
             }
             
